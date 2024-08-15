@@ -1,0 +1,19 @@
+{
+  "name": "xmtp-example",
+  "version": "1.0.0",
+  "description": "simple example of xmtp client",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/client": "^3.11.4",
+    "@xmtp/xmtp-js": "^12.1.0",
+    "ethers": "^6.13.2",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "node-fetch": "^3.3.2"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
