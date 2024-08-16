@@ -1,6 +1,6 @@
-const { Client } = require('@xmtp/xmtp-js/dist');
+const { Client } = require('@xmtp/xmtp-js');
 const { Wallet } = require('ethers');
-require('dotenv/lib/main').config();
+require('dotenv').config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const PRIVATE_KEY2 = process.env.PRIVATE_KEY2;

@@ -2,7 +2,6 @@ const ethers = require('ethers');
 const viem = require('viem');
 const sendNotice = require('./xmtp.controller.js');
 let lastAnalysedNotice = 0;
-// const dataMap = new Map();
 
 
 function filterNotices(notices) {

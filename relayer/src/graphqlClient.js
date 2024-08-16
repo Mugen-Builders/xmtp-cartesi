@@ -1,7 +1,6 @@
-const { ApolloClient, InMemoryCache } = require('@apollo/client/core');
-const { gql } = require('graphql-tag/src');
+const { ApolloClient, InMemoryCache, ApolloProvider, gql } = require('@apollo/client');
 const filterNotices = require('./controllers/graphql.controller');
-require('dotenv/lib/main').config();
+require('dotenv').config();
 
 const URI = process.env.URI;
 const POOL_INTERVAL = process.env.POOL_INTERVAL;
