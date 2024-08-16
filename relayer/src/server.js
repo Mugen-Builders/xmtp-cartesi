@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 app.get('/test', function (req, res) {
-    res.send('Hello World! This is a test endpoint after updates');
+    res.send('GraphQL listener is running. Check the console for notices.');
 })
 
 app.listen(PORT, function () {
