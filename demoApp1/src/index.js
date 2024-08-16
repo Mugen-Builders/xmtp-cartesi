@@ -13,47 +13,40 @@ let totalNotice = 0;
 
 async function handle_advance(data) {
   console.log("Received advance request data " + JSON.stringify(data));
-  let relayerAddress = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
   let caller = data.metadata.msg_sender;
-
-  console.log(`caller is: ${caller.toString()}`);
-  console.log(`relayer is: ${relayerAddress.toString()}`);
 
   let payload = data.payload;
   let target;
   let newData;
   let signer;
 
-  if (caller.toString().toLowerCase() == relayerAddress.toString().toLowerCase()) {
-    let hexString = hexToString(payload);
-    console.log("yesssss" + hexString);
-    let jsonData = JSON.parse(hexString);
-    target = jsonData.target;
-    newData = jsonData.data;
-    signer = jsonData.signer;
+  let hexString = hexToString(payload);
+  console.log(`caller is: ${caller.toString()}`);
+  console.log(`payload is: ${hexString}`);
 
-    console.log(`data is: ${newData}`);
-    console.log(`sender is: ${signer}`);
+  let jsonData = JSON.parse(hexString);
+  target = jsonData.Destination;
+  newData = jsonData.Message;
 
-    recordNewReview(newData, signer);
-    totalNotice = totalNotice + 1;
+  console.log(`Message is: ${newData}`);
+  console.log(`Target is: ${target}`);
 
-    let noticeStructure = {
-      data: reviews,
-      totalNotice: totalNotice,
-      TxType: 'InAppMessage',
-      Origin: '0x1234567890abcdef1234567890abcdef1234567890',
-      Destination: '0xbD8Eba8Bf9e56ad92F4C4Fc89D6CB88902535749',
-      Payload: "This is to say that the app is working",
-    }
-    console.log(noticeStructure);
-    let hexNotice = stringToHex(JSON.stringify(noticeStructure));
-    console.log(hexNotice);
+  recordNewReview(newData, caller.toString());
+  totalNotice = totalNotice + 1;
 
-    emitNotice(hexNotice);
-  } else {
-    console.log("Caller is not relayer");
+  let noticeStructure = {
+    data: reviews,
+    totalNotice: totalNotice,
+    TxType: 'InAppMessage',
+    Origin: caller.toString(),
+    Destination: '0xbD8Eba8Bf9e56ad92F4C4Fc89D6CB88902535749',
+    Payload: newData,
   }
+  console.log(noticeStructure);
+  let hexNotice = stringToHex(JSON.stringify(noticeStructure));
+  console.log(hexNotice);
+
+  emitNotice(hexNotice);
   return "accept";
 }
 
