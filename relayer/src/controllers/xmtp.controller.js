@@ -36,17 +36,19 @@ async function sendNotice(Origin, Destination, Payload) {
 
         const isOnNetwork = await Client.canMessage(
             Destination,
-            { env: "dev" },
+            { env: "dev" }, // This is the environment the XMTP client is being initialized in
         );
         if (!isOnNetwork) {
             console.log(`Destination wallet is not on the network. Sending message to Fallback wallet......`);
             await initializeXmtp(PRIVATE_KEY2);
             const conversation = await xmtp.conversations.newConversation((new Wallet(PRIVATE_KEY2)).address);
-            const message = await conversation.send({ sender: Origin, Message: Payload });
+            const messageContent = `Sender: ${Origin}, Message: ${Payload}`;
+            const message = await conversation.send(messageContent);
             console.log('Message sent:', message);
         } else {
             const conversation = await xmtp.conversations.newConversation(Destination);
-            const message = await conversation.send({ sender: Origin, Message: Payload });
+            const messageContent = `Sender: ${Origin}, Message: ${Payload}`;
+            const message = await conversation.send(messageContent);
             console.log('Message sent:', message);
         }
     } catch (error) {
